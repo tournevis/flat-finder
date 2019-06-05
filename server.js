@@ -5,6 +5,7 @@ const BASE_URL = "https://ws.louervite.fr/"
 const GET_NEW_FLAT = "AnnonceWebService.svc/RechercherAnnonces?request="
 const DB = require('./lib/db.js')
 const Flat = require('./lib/flat.js')
+const sendEmail = require('./lib/email.js')
 
 var database = new DB(mysqlConf)
 var requestUrl = BASE_URL + GET_NEW_FLAT + serialize(searchParams)
@@ -36,6 +37,7 @@ function  handleData(data) {
     for (var i = r.length - 1; i >= 0; i--) {
       var formatedFlat = Flat.serialize(r[i])
       var t = database.add(formatedFlat)
-    }    
+    } 
   }
+  sendEmail()
 }
